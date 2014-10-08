@@ -85,10 +85,11 @@ LinkedList<T>::LinkedList(){
 template <class T>
 LinkedList<T>::~LinkedList() {
 	Node* temp = dummyNode->next;
-	do{
+
+	while(temp != dummyNode){
 		temp = temp->next;
 		delete temp->prev;
-	}while(temp != dummyNode); //does this work?
+	}
 	delete dummyNode;
 }
 
@@ -99,7 +100,7 @@ typename LinkedList<T>::Node* LinkedList<T>::find(unsigned long i){
 		return dummyNode;
 	}else if(i>numItems){
 		throw std::string("Index is larger than number of items, in find()");
-	}else {
+	}else { //if 'i' is valid
 		Node* ret = dummyNode->next;
 		while(i>0){
 			ret = ret->next;
@@ -120,15 +121,17 @@ void LinkedList<T>::set(unsigned long i, T x){
 
 template <class T>
 void LinkedList<T>::add(unsigned long i, T x){
-  //TODO
-	Node* temp = find(i);
 	Node* newNode = new Node();
 	newNode->data = x;
 
+	Node* temp = find(i);	
+		
 	newNode->prev = temp->prev;
 	newNode->next = temp;
-	(temp->prev)->next = newNode;
+	(newNode->prev)->next = newNode;
 	temp->prev = newNode;
+	
+	numItems++;
 }
 
 template <class T>
@@ -143,6 +146,7 @@ void LinkedList<T>::remove(unsigned long i){
 	(temp->prev)->next = temp->next;
 	(temp->next)->prev = temp->prev;
 	delete temp; //delete Node that temp points to
+	numItems--;
 	}
 }
 
@@ -159,14 +163,5 @@ T LinkedList<T>::get(unsigned long i){
 
 template <class T>
 unsigned long LinkedList<T>::size(){
-  //TODO
-  int count = 0;
-  int loc = 0;
-  Node* check = dummyNode->next; //starts at index 0;
-  while(check != dummyNode){
-	count++;
-	loc++;
-	check = check->next;
-  }
-  return count;
+  return numItems;
 }

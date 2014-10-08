@@ -21,8 +21,8 @@ Questions
 #### 1. Which of the above requirements work, and which do not? For each requirement, write a brief response.
 
 1. TODO
-2. TODO
-3. TODO
+2. All exceptions were caught as the testExceptions() method desired, so that it printed "SUCCESS: exception of type --- was caught".
+3. Each time 'new' was called, a corresponding 'delete' call was made later, so there ought to be no memory leaks.
 4. TODO
 
 #### 2. If we did an ArrayList instead of a LinkedList, which of the public methods would be faster, and which would be slower? Explain your answer.

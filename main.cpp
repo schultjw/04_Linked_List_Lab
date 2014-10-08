@@ -10,20 +10,23 @@ void testCtor(){
   } else {
     std::cout << "ERROR: Fresh list should have 0 items, but has " << testList.size() << std::endl;
   }
-  std::cout << "loc 1" << std::endl;
+  //std::cout << "end of testCtor()" << std::endl;
 }
 
 //Add and remove some items, making sure they come back in the
 // correct order
 void testBasicMethods(){
-  //std::cout << "loc 2" << std::endl;
+  //std::cout << "loc 'testBasicMethods' start" << std::endl;
   LinkedList<int> testList;
+  //std::cout << "loc 'testBasicMethods' after ctor" << std::endl;
   testList.add(0,0);
   testList.add(0,1);
   testList.add(0,2);
   testList.add(3,3);
   testList.add(4,4);
   testList.add(5,5);
+
+  //std::cout << "loc 'testBasicMethods' post-adding" << std::endl;
 
   if(testList.size() == 6){
     std::cout << "SUCCESS: 6 items added" << std::endl;
@@ -193,11 +196,13 @@ void testSplice(){
 
 //A simple main function which creates a list, and tests it.
 int main(){
-	std::cout << "loc 'main' 1" << std::endl;
+	//std::cout << "loc 'main' pre-testCtor()" << std::endl;
   testCtor();
-  std::cout << "loc 'main' 2" << std::endl;
+	//std::cout << "loc 'main' post-ctor, pre-testBasicMethods()" << std::endl;
   testBasicMethods();
+	//std::cout << "loc 'main' post-testBasicMethods(), pre-testExceptions()" << std::endl;
   testExceptions();
+	//std::cout << "loc 'main' post-testExceptions, finished execution." << std::endl;
   //testSplice();
 
   return 0;
