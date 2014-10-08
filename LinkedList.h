@@ -77,46 +77,96 @@ template <class T>
 LinkedList<T>::LinkedList(){
 	dummyNode = new Node();
 	dummyNode->next = dummyNode;
-	dummyNode->prev = dummyNode;
+	(*dummyNode).prev = dummyNode; //Same effect as last line.
+
+	numItems = 0;
 }
 
 template <class T>
 LinkedList<T>::~LinkedList() {
-  //TODO
+	Node* temp = dummyNode->next;
+	do{
+		temp = temp->next;
+		delete temp->prev;
+	}while(temp != dummyNode); //does this work?
+	delete dummyNode;
 }
 
 template <class T>
 typename LinkedList<T>::Node* LinkedList<T>::find(unsigned long i){
-  //TODO
-  return NULL;
+	//find and return pointer to Node at index i
+	if (i==numItems){
+		return dummyNode;
+	}else if(i>numItems){
+		throw std::string("Index is larger than number of items, in find()");
+	}else {
+		Node* ret = dummyNode->next;
+		while(i>0){
+			ret = ret->next;
+			i--;
+		}
+		return ret;
+	}
 }
 
 template <class T>
 void LinkedList<T>::set(unsigned long i, T x){
-  //TODO
+	if(size() < i){
+		throw std::string("In set(), index too large.");
+	}
+	Node* target = find(i);
+	target->data = x;
 }
 
 template <class T>
 void LinkedList<T>::add(unsigned long i, T x){
   //TODO
+	Node* temp = find(i);
+	Node* newNode = new Node();
+	newNode->data = x;
+
+	newNode->prev = temp->prev;
+	newNode->next = temp;
+	(temp->prev)->next = newNode;
+	temp->prev = newNode;
 }
 
 template <class T>
 void LinkedList<T>::remove(unsigned long i){
-  //TODO
+	//change ->next and ->prev, then delete node
+	//at i, make (i-1).next link to i+1,
+	//  and make (i+1).prev link to i-1;
+	if(size() < i+1){ //size must be at least i+1
+		throw std::string("In remove(), index was too large.");
+	}else{
+	Node* temp = find(i);
+	(temp->prev)->next = temp->next;
+	(temp->next)->prev = temp->prev;
+	delete temp; //delete Node that temp points to
+	}
 }
 
 template <class T>
 T LinkedList<T>::get(unsigned long i){
-  //TODO -- The code that is here is a useless stub, you probably
-  // want to delete it
-  Node junkNode;
-  return junkNode.data; //This is unitialized data
+  Node* myNode = find(i);
+  if(myNode == dummyNode){
+	  throw std::string("In get(), index was too large.");
+  }else{
+	  return myNode->data;
+  }
 }
 
 
 template <class T>
 unsigned long LinkedList<T>::size(){
   //TODO
-  return 0;
+  int count = 0;
+  int loc = 0;
+  Node* check = dummyNode->next; //starts at index 0;
+  while(check != dummyNode){
+	count++;
+	loc++;
+	check = check->next;
+  }
+  return count;
 }

@@ -10,11 +10,13 @@ void testCtor(){
   } else {
     std::cout << "ERROR: Fresh list should have 0 items, but has " << testList.size() << std::endl;
   }
+  std::cout << "loc 1" << std::endl;
 }
 
 //Add and remove some items, making sure they come back in the
 // correct order
 void testBasicMethods(){
+  //std::cout << "loc 2" << std::endl;
   LinkedList<int> testList;
   testList.add(0,0);
   testList.add(0,1);
@@ -191,7 +193,9 @@ void testSplice(){
 
 //A simple main function which creates a list, and tests it.
 int main(){
+	std::cout << "loc 'main' 1" << std::endl;
   testCtor();
+  std::cout << "loc 'main' 2" << std::endl;
   testBasicMethods();
   testExceptions();
   //testSplice();
